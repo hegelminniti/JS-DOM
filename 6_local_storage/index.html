@@ -1,0 +1,91 @@
+<!-- Lo scope di questo task è di salvare tutti i dati di un form nel local storage.
+    -Fai in modo che nello span venga inserito il testo che si è inserito nell'input nome
+    -Fai in modo che questi dati si salvino nel local storage
+    -Controlla che al reload il nome nel titolo non scompaia -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .form {
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Il form di <span class="title-name"></span></h1>
+    <div class="form">
+      <label for="email">Email</label>
+      <input type="email" name="email" class="email" placeholder="email" />
+      <label for="firstname">Name</label>
+      <input
+        type="text"
+        name="firstname"
+        class="firstname"
+        placeholder="firstname"
+      />
+      <label for="lastname">Surname</label>
+      <input
+        type="text"
+        name="lastname"
+        class="lastname"
+        placeholder="lastname"
+      />
+    </div>
+    <button class="btn">Salva</button>
+    <p class="printedform"></p>
+
+    <script>
+      const btn = document.querySelector(".btn");
+
+      function setName(username) {
+        const titleName = document.querySelector(".title-name");
+        titleName.innerText = username;
+        localStorage.setItem("user-firstname", username);
+      }
+
+      btn.addEventListener("click", () => {
+        const inputFirstName = document.querySelector(".firstname");
+        const firstnameValue = inputFirstName.value;
+        setName(firstnameValue);
+
+        const inputEmail = document.querySelector(".email");
+        const emailValue = inputEmail.value;
+        const inputLastName = document.querySelector(".lastname");
+        const lastnameValue = inputLastName.value;
+
+        const dataObj = {
+          email: emailValue,
+          firstname: firstnameValue,
+          lastname: lastnameValue,
+        };
+
+        localStorage.setItem("user-data", JSON.stringify(dataObj));
+
+        /*
+    Potrei eliminare l'oggetto e settare un item per ogni campo del form. Ho utilizzato questo metodo perché non era specificato quale usare, così ho testato anche il formato json.
+    */
+      });
+
+      const savedName = localStorage.getItem("user-firstname");
+      const savedData = localStorage.getItem("user-data");
+
+      if (savedName) {
+        setName(savedName);
+      }
+    </script>
+  </body>
+</html>

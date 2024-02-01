@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1 class="character-name"></h1>
+        <img class="character-img" src="" alt="">
+    </div>
+
+
+    <script>
+
+        async function fetchData() {
+            try {
+                const response = await fetch('https://ringsdb.com/api/public/cards/');
+                const responseJson = await response.json();
+                const card = responseJson[4]
+                const {name, imagesrc} = card;
+
+                const h1 = document.querySelector('.character-name');
+                const image = document.querySelector('.character-img');
+
+                h1.innerText = name;
+                image.setAttribute('src', 'https://ringsdb.com' + imagesrc)
+                
+            } catch (error) {
+                console.log('error')
+            }
+        }
+
+        fetchData();
+
+    </script>
+</body>
+</html>
